@@ -39,20 +39,58 @@ class DoublyLinkedList {
             }
         }
 
+        //Assume it's a new Node OR an existing Node
         public void insertBefore(Node node, Node nodeToInsert) {
-            
+            //if we only have one node and we want to insert the same node before itself, return
+            if(node == this.head && node == this.tail) return;
+            //Assume it's an existing Node: first completly remove it
+            remove(nodeToInsert);
+            //Now you can add it as a brand new Node
+            nodeToInsert.next = node;
+            nodeToInsert.prev = node.prev;//null if head or prevNode if not head
+            if(node.prev == null){//node is the head
+                this.head = nodeToInsert;
+            } else {
+                Node prevNode = node.prev;//||nodeToInsert.prev
+                prevNode.next = nodeToInsert;
+            }
+            node.prev = nodeToInsert;
         }
 
+        //Assume it's a new Node OR an existing Node
         public void insertAfter(Node node, Node nodeToInsert) {
-            
+            //if we only have one node and we want to insert the same node after itself, return
+            if(node == this.head && node == this.tail) return;
+            //Assume it's an existing Node: first completly remove it
+            remove(nodeToInsert);
+            //Now you can add it as a brand new Node
+            nodeToInsert.prev = node;
+            nodeToInsert.next = node.next;//null if tail, nextNode if not null
+            if(node.next == null){//if null it's a tail
+                this.tail = nodeToInsert;
+            } else {
+                Node nextNode = node.next;
+                nextNode.prev = nodeToInsert;
+            }
+            node.next = nodeToInsert;
         }
 
         public void insertAtPosition(int position, Node nodeToInsert) {
             // Write your code here.
+            
         }
 
         public void removeNodesWithValue(int value) {
-            // Write your code here.
+            Node currentNode = this.head;
+            while(currentNode!=null && currentNode.value != value){
+                //keep a reference of the Node to be removed
+                Node nodeToBeRemoved = currentNode;
+                //change the currentNode to nextNode
+                currentNode = currentNode.next;          
+                if(nodeToBeRemoved.value == value) {
+                    remove(nodeToBeRemoved);
+                }      
+            }
         }
 
         public void remove(Node node) {
@@ -66,9 +104,12 @@ class DoublyLinkedList {
                 //supposing node ALWAYS existS
                 Node prevNode = node.prev;
                 Node nextNode = node.next;
-
-                prevNode.next = nextNode;
-                nextNode.prev = prevNode; 
+                if(prevNode != null){
+                    prevNode.next = nextNode;
+                }
+                if(nextNode != null){
+                    nextNode.prev = prevNode; 
+                }
             }
             node.next = null;//remove binding from node to node.next
             node.prev = null;//remove binding from node to node.prev
