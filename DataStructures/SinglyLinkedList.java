@@ -177,7 +177,23 @@ class SinglyLinkedList {
         }
 
         public void remove(Node node) {
-            
+            if (node == this.head) { removeHead();}
+            else if (node == this.tail) { removeTail();}
+            else {
+                //find the node first
+                Node currentNode = this.head;
+                Node previousFromCurrentNode = null;
+                while(currentNode != null && currentNode != node){
+                    previousFromCurrentNode = currentNode;
+                    currentNode = currentNode.next;
+                }
+                if(currentNode != null) {//we found the node 
+                    //previousFromCurrentNode will not be null here as we are capturing the (node == this.head)
+                    previousFromCurrentNode.next = currentNode.next;
+                    currentNode.next = null;//not needed
+                    this.length--;
+                }
+            }
         }
 
         
@@ -218,9 +234,11 @@ class SinglyLinkedList {
         sll.insertAfter(n5, n4);
         sll.insertBefore(n2, n3);
         System.out.println(sll);
+        sll.remove(n6);
+        System.out.println(sll);
+        System.out.println(sll.findPosition(n6));
         System.out.println(sll.containsNodeWithValue(12));
         System.out.println(sll.containsNodeWithValue(120));
-        System.out.println(sll.findPosition(n4));
         System.out.println(sll.get(0).value);
         sll.removeHead();
         sll.removeTail();
