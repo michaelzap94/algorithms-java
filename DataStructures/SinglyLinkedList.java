@@ -199,6 +199,15 @@ class SinglyLinkedList {
         
         public void removeNodesWithValue(int value) {
             // Write your code here.
+            Node currentNode = this.head;
+            while(currentNode != null){//if currentNode is null, we got to the end or didn't even start
+                int nodeValue = currentNode.value;
+                Node nodeToRemove = currentNode;
+                currentNode = currentNode.next;
+                if(nodeValue == value){
+                    remove(nodeToRemove);
+                }
+            }
         }
 
         public boolean containsNodeWithValue(int value) {
@@ -228,11 +237,11 @@ class SinglyLinkedList {
         Node n5 = new Node(15);
         Node n6 = new Node(16);
         sll.setHead(n1);
-        sll.setHead(n2);
+        sll.setHead(n2);//make head
         sll.setTail(n6);
         sll.insertAtPosition(2, n5);
         sll.insertAfter(n5, n4);
-        sll.insertBefore(n2, n3);
+        sll.insertBefore(n2, n3);//make head
         System.out.println(sll);
         sll.remove(n6);
         System.out.println(sll);
@@ -240,8 +249,10 @@ class SinglyLinkedList {
         System.out.println(sll.containsNodeWithValue(12));
         System.out.println(sll.containsNodeWithValue(120));
         System.out.println(sll.get(0).value);
+        sll.removeNodesWithValue(13);
+        System.out.println(sll);
         sll.removeHead();
-        sll.removeTail();
+        sll.removeHead();
         sll.removeTail();
         sll.removeTail();
         System.out.println(sll.get(0));//null
