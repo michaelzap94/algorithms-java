@@ -12,7 +12,6 @@ class DoublyLinkedList {
     static class DLL {
         public Node head = null;
         public Node tail = null;
-        public int length = 0;
 
         public void setHead(Node node) {
             //unshift()
@@ -41,11 +40,11 @@ class DoublyLinkedList {
         }
 
         public void insertBefore(Node node, Node nodeToInsert) {
-            // Write your code here.
+            
         }
 
         public void insertAfter(Node node, Node nodeToInsert) {
-            // Write your code here.
+            
         }
 
         public void insertAtPosition(int position, Node nodeToInsert) {
@@ -57,12 +56,38 @@ class DoublyLinkedList {
         }
 
         public void remove(Node node) {
-            // Write your code here.
+            if(node == this.head){
+                this.head = node.next;//change head to node.next
+                this.head.prev = null;//remove node.next binding
+            } else if(node == this.tail){
+                this.tail = node.prev;
+                this.tail.next = null;
+            } else {
+                //supposing node ALWAYS existS
+                Node prevNode = node.prev;
+                Node nextNode = node.next;
+
+                prevNode.next = nextNode;
+                nextNode.prev = prevNode; 
+            }
+            node.next = null;//remove binding from node to node.next
+            node.prev = null;//remove binding from node to node.prev
         }
 
         public boolean containsNodeWithValue(int value) {
-            // Write your code here.
-            return false;
+            boolean contains = false;
+            //because it's doubly we could do head to tail or tail to head
+            Node currentNode = this.head;
+            while(currentNode!=null && currentNode.value != value){
+                currentNode = currentNode.next;
+            }
+            if(currentNode!=null){
+                //currentNode contains some value that matches the value
+                // && currentNode.value == value -> is redundant because we will get to this point iff there was a currentNode and the value was found, 
+                // as if not found currentNode == null since that's the value the tail.next points to
+                return true;
+            }
+            return contains;
         }
     }
 
